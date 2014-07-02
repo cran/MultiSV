@@ -1,0 +1,96 @@
+use strict;
+use Getopt::Long;
+use List::Util qw(min max sum);
+
+my $usage = <<'USAGE';
+
+################ Hits2MultiSVBin ################
+
+	usage: Hits2MultiSVBin [options]
+
+		RDBinSampleFile = "Samples1.hits.txt"
+		
+		RDBinChrSizeFile = "Chr.Size.txt"
+		
+		RDBinSampleName = "Sample1"
+
+		RDBinWindowSize = 1000
+
+		--outputdirectory = "~/BinRDCount/"
+
+Author: Khurram Maqbool
+#########################################
+USAGE
+
+my $HitFile;
+my $window_size = 1000;
+my $outputdirectory = "~/WindowCounts/";
+my $SampleName = "Sample1";
+my $ChrFile = "Chr.Size.txt";
+
+my $result = GetOptions(
+	"Sample=s" => \$HitFile,
+	"ChrFile=s" => \$ChrFile,
+	"samplename=s" => \$SampleName,
+	'window-size=i' => \$window_size,
+	"outputdirectory=s" => \$outputdirectory,
+	"help|?" => sub{print $usage; exit}
+);
+
+die $usage unless($HitFile);
+unless (-e "$outputdirectory") {mkdir("$outputdirectory");}
+
+my %ChrSize;
+###############################   Read Header ##########################################
+
+open(ChrFile,"$ChrFile") || die "unable to open $ChrFile\n";
+while(<ChrFile>){
+	chomp;	 
+    my $chromosome;
+    my $chr_length;
+    my @line = split("\t",$_);
+	$ChrSize{$line[0]} = $line[1];
+  	
+}
+
+########################################################################################
+my $SamplesHitSorted = $HitFile;
+open(Samples,$SamplesHitSorted) or die "can not find $SamplesHitSorted file\n";
+my $temp = $SamplesHitSorted;
+$temp =~ s/.+\///;
+my $out = $temp;
+$out .= ".WindowRD_$window_size.txt";
+my $Outfile = "$outputdirectory$out";
+my $step = sprintf("%.0f",$window_size);
+my (%count, %Samples_total);
+my $pat = qr/^\s*(\S+)\s+([\d.eE\+-]+)\s*$/;
+my $n=0;
+foreach my $chr(sort keys %ChrSize){
+$count{$chr}->[0][0] = 0;
+}
+open(Samples,$SamplesHitSorted) or die;
+while(<Samples>){
+	if(m/$pat/){
+		$n++;
+		my $window_pos = int($2/$step);
+		$count{$1}->[0][$window_pos]++;
+		$count{$1}->[0][$window_pos-1]++ if $window_pos>0;
+	}
+}
+print $count{1}->[0][1];
+my $countfile = "$outputdirectory$out.count.txt";
+open(OUT, ">$countfile") or die;
+print "write read-counts into file: $countfile\n";
+print OUT "chr\tstart\tend\t$SampleName\n";
+foreach my $chr(sort keys %ChrSize){    
+	my @Samples = @{$count{$chr}->[0]};
+	for my $id (0..($ChrSize{$chr}/$step)){
+		#print $chr,"\t",$ChrSize{$chr},"\n";
+		my $start = $step*$id+1;
+		my $end = $start+$window_size-1;
+		my $Samples_raw = $Samples[$id]+0;
+		my ($Samples, $ref)=(0,0);
+		print OUT "$chr\t$start\t$end\t$Samples_raw\n";
+	}
+}
+close OUT;

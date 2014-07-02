@@ -1,0 +1,13 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("Version: %s", version$version.string)
+
+bibentry(bibtype = "Manual",
+         title = "MultiSV: CNVs in multiple populations",
+         author = c(person("Khurram", "Maqbool"),
+                    person("Lars", "Ronnegard"),
+		    person("Leif Andersson")
+			),
+         year = year,
+         note = note,
+         url = "http://CRAN.R-project.org/package=MultiSV"
+         )
