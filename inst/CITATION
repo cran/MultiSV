@@ -2,7 +2,7 @@ year <- sub("-.*", "", meta$Date)
 note <- sprintf("Version: %s", version$version.string)
 
 bibentry(bibtype = "Manual",
-         title = "MultiSV: CNVs in multiple populations",
+         title = "MultiSV: an R package for identification of structural variations in multiple populations based on whole genome resequencing",
          author = c(person("Khurram", "Maqbool"),
                     person("Lars", "Ronnegard"),
 		    person("Leif Andersson")

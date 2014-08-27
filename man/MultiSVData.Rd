@@ -4,8 +4,11 @@
 \alias{MultiSVData}
 \title{RD Data}
 \description{
-The data set is read depth (RD) from populations of pigs (SS10.2). RD from each
-population in 1kb bins.
+The data set is read depth (RD) from six domestic populations including ugc355, ugc356,
+ugc357, ugc358, ugc376, ugc377 and one wild (WB) population of pigs (SS10.2).
+The reads for the populations are available from SRA accession number SRA057461.
+RD from each population is in 1kb bins obtained after aligning the reads
+from each population to SS10.2 reference genome assembly.
 }
 \author{
 Khurram \enc{Maqbool}{Maqbool}

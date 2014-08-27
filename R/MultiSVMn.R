@@ -1,6 +1,5 @@
 ##' @import utils
 ##' @export
-
 `CallMultiSV` <- function(CfgFile, LgLim, SVSize, MtlSVOut) UseMethod("CallMultiSV")
 
 .onAttach <- 
@@ -18,91 +17,50 @@
 	packageStartupMessage(paste("Authors: ", MltSvAthr, sep = ""))
 	packageStartupMessage(paste("Maintainer: ", MltSvMntr, "\n", sep = ""))
 	packageStartupMessage('Use citation("MultiSV") to know how to cite our work.\n')
-	#packageStartupMessage('Discussion: https://r-forge.r-project.org/forum/')
-	#packageStartupMessage('BugReports: https://r-forge.r-project.org/tracker/')
-	#packageStartupMessage('VideoTutorials: http://www.youtube.com/')
 }
-
-
-
-
 ##' @export
-
-
-
 `ComputeBinCounts` <- function(RDBinSampleFile, RDBinChrSizeFile, RDBinSampleName , 
 					 RDBinWindowSize
 						, OutFolder) UseMethod("ComputeBinCounts") 
 
-
-
-
-
-
 ##' @export
 `CmptMltPvl` <- function (MultiData,CfgFile) UseMethod("CmptMltPvl") 
-
-
-
-
-
 
 #' @import reshape
 ##' @export
 
 `IdfMltSV` <- function(MultiData,LgLim,SVSize) UseMethod("IdfMltSV") 
 
-
-
-
-##' @import reshape
+#' @import reshape
 ##' @export
 
 `WriteMultiSV` <- function(MultiData,File) UseMethod("WriteMultiSV") 
-
-
-
-
-
 
 ##' @import nlme
 ##' @export
 
 `PrbMlt` <- function(MultiData) UseMethod("PrbMlt")
 
-
 ##' @export
 
 ###############################################################################
 `gtExEs` <- function(proc) UseMethod("gtExEs")
 
-
-
 ##' @export
-
 `Bin2MultiSV` <- function(CfgFile) UseMethod("Bin2MultiSV")
 
-
-
 ##' @export
-
 `PrepMultiDtLgMn` <- function (MultiData) UseMethod("PrepMultiDtLgMn")
 
-
 ##' @export
-
 `PrepMultiDt` <- function (MultiData) UseMethod("PrepMultiDt")
 
 
-
 ##' @export
-
 `ProcMutilDt` <- function (MultiData) UseMethod("ProcMutilDt")
 
 
-
 ##' @export
-
 `MultiSVExample` <- function (MultiSVData) UseMethod("MultiSVExample")
 
 
